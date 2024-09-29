@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="black-minus" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="black-text" type="text" class="form-control text-center" value="1">
+                           <button id="black-plus" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="black-price">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="Silicone-minus" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="Silicone-text" type="text" class="form-control text-center" value="1">
+                           <button id="Silicone-plus" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$<span id="Silicone-price">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="subTotal">00</span> </h5>
+                        <h5>$ <span id="tax"></span>00</h5>
+                        <h5>$ <span id="total"></span>00</h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      let priceBlack = 0, priceSilicone = 0;
+      const blackMinus = document.getElementById("black-minus")
+      blackMinus.addEventListener("click", function(){
+         // let decrement = document.getElementById("black-text").value
+         // let decrementNumber = parseFloat(decrement)
+         // decrementNumber = decrementNumber - 1
+         // document.getElementById("black-text").value = decrementNumber
+
+         // let blackPrice = document.getElementById("black-price").innerText
+         // let blackPriceNumber = parseFloat(blackPrice)
+         // blackPriceNumber = blackPriceNumber - 1219
+         // document.getElementById("black-price").innerText = blackPriceNumber
+         priceBlack = updateSpanText("black-text", "black-price", 1, 1219)
+         updateSubTotal()
+      })
+
+      const blackPlus = document.getElementById("black-plus")
+      blackPlus.addEventListener("click", function(){
+         priceBlack = updateSpanText("black-text", "black-price", -1, -1219)
+         updateSubTotal()
+      })
+
+      const SiliconeMinus = document.getElementById("Silicone-minus")
+      SiliconeMinus.addEventListener("click", function(){
+         priceSilicone = updateSpanText("Silicone-text", "Silicone-price", 1, 59)
+         updateSubTotal()
+      })
+
+      const SiliconePlus = document.getElementById("Silicone-plus")
+      SiliconePlus.addEventListener("click", function(){
+         priceSilicone = updateSpanText("Silicone-text", "Silicone-price", -1, -59)
+         updateSubTotal()
+      })
+
+      function updateSpanText(id1, id2, i, p){
+         let decrement = document.getElementById(id1).value
+         let decrementNumber = parseFloat(decrement)
+         decrementNumber = decrementNumber - i
+         document.getElementById(id1).value = decrementNumber
+      
+         let blackPrice = document.getElementById(id2).innerText
+         let blackPriceNumber = parseFloat(blackPrice)
+         blackPriceNumber = blackPriceNumber - p
+         document.getElementById(id2).innerText = blackPriceNumber
+         return blackPriceNumber
+      }
+
+      function updateSubTotal() {
+         let subTotal = priceBlack + priceSilicone;
+         document.getElementById("subTotal").innerText = subTotal
+
+         let tax = parseFloat((subTotal * 10 / 100))
+         document.getElementById("tax").innerText = tax.toFixed(2)
+
+         let total = subTotal + tax
+         document.getElementById("total").innerText = total
+      }
+      
+   </script>
+</body>
+
+</html>
