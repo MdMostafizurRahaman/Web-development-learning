@@ -9,12 +9,41 @@
 <body>
     <h1>My node and mongo db site</h1>
     <h2 id="userName"></h2>
+
+    <div class="container">
+        <div class="row">
+            <input type="text" id="user"><br>
+            <button class="btn btn-primary" id="addUser">Add User</button>
+        </div>
+    </div>
+    
     <script>
         fetch('http://localhost:3000/users/0')
         .then(res => res.json())
         .then(data => {
             document.getElementById('userName').innerText = data.name
         })
+
+        //post
+        document.getElementById('addUser').addEventListener('click', ()=>{
+            const name = document.getElementById('user').value
+            const user = {name}
+            fetch('http://localhost:3000/addUser', {
+                method: 'POST',
+                body: JSON.stringify(user),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then(res => res.json())
+            .then(data => updateUser(data))
+        })
+
+        function updateUser(user){
+            document.getElementById('userName').innerText = user.name
+        }
+
+
     </script>
 </body>
 </html>
