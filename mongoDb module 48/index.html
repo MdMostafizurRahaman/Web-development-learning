@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Look Rakib I have a dataBase</h1>
+    <form action="/addProduct" method="post">
+        <input type="text" placeholder="name" name="name">
+        <br>
+        <input type="text" placeholder="price" name="price">
+        <br>
+        <input type="text" placeholder="quantity" name="quantity">
+        <br>
+        <button type="submit">Add Product</button>
+    </form>
+
+    <div id="products">
+
+    </div>
+
+    <script>
+        function loadProducts(){
+            fetch('/products')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                const container = document.getElementById('products')
+                data.forEach(pd => {
+                    const p = document.createElement('p')
+                    p.innerHTML = `<b>name:</b> ${pd.name} <b>price:</b> ${pd.price} 
+                    <b>Quantity:</b> ${pd.quantity}  <button onclick="deleteProduct('${pd._id}')">Delete</button>`
+                    container.appendChild(p)
+                });
+            })
+        }
+
+        loadProducts()
+
+        function deleteProduct(id){
+            fetch(`/delete/${id}`,{
+                method: 'DELETE'
+            })
+            .then(res => res.json())
+            .then(result => {
+                console.log('Deleted successfully')
+            })
+        }
+    </script>
+</body>
+</html>
